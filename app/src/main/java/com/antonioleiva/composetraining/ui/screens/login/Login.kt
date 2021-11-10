@@ -1,26 +1,30 @@
 package com.antonioleiva.composetraining.ui.screens.login
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import android.widget.Toast
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Button
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.antonioleiva.composetraining.ui.screens.Screen
 
 @Composable
 fun Login() {
     Screen {
-        MyButton(text = "Hello World")
-    }
-}
-
-@Composable
-fun MyButton(text: String) {
-    val context = LocalContext.current
-    Button(onClick = { Toast.makeText(context, "Button clicked", Toast.LENGTH_LONG).show() }) {
-        Text(text = text)
+        Column(
+            verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            TextField(value = "user", onValueChange = {})
+            TextField(value = "password", onValueChange = {})
+            Button(onClick = { }) {
+                Text("Login")
+            }
+        }
     }
 }
 
