@@ -8,7 +8,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -54,6 +53,7 @@ fun LoginForm(
     var user by rememberSaveable { mutableStateOf("") }
     var pass by rememberSaveable { mutableStateOf("") }
     val buttonEnabled = user.isNotEmpty() && pass.isNotEmpty()
+    val isError = message != null
 
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
@@ -62,8 +62,17 @@ fun LoginForm(
             .verticalScroll(rememberScrollState())
             .width(IntrinsicSize.Min)
     ) {
-        TextField(value = user, onValueChange = { user = it })
-        TextField(value = pass, onValueChange = { pass = it })
+        UserTextField(
+            user = user,
+            setUser = { user = it },
+            isError = isError
+        )
+        PassTextField(
+            pass = pass,
+            setPass = { pass = it },
+            isError = isError,
+            onDone = { if (buttonEnabled) onSubmit(user, pass) }
+        )
         Button(
             enabled = buttonEnabled,
             onClick = { onSubmit(user, pass) },
