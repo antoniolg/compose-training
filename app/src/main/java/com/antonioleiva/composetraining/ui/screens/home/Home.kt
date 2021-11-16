@@ -4,7 +4,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ListItem
 import androidx.compose.material.Text
@@ -23,14 +24,14 @@ fun Home() {
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
-        items(itemList) {
+        itemsIndexed(itemList) { index, item ->
             ListItem(
-                text = { Text(it.title) },
-                secondaryText = { Text(it.subtitle) },
+                text = { Text(item.title) },
+                secondaryText = { Text(item.subtitle) },
                 icon = {
                     Image(
                         painter = rememberImagePainter(
-                            data = it.thumb,
+                            data = item.thumb,
                             builder = {
                                 transformations(CircleCropTransformation())
                                 crossfade(true)
@@ -41,6 +42,9 @@ fun Home() {
                     )
                 }
             )
+            if (index < itemList.size - 1) {
+                Divider()
+            }
         }
     }
 }
