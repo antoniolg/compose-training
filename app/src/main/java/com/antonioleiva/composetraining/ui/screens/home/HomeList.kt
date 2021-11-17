@@ -7,19 +7,20 @@ import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.antonioleiva.composetraining.model.Item
 
 @ExperimentalMaterialApi
 @Composable
-fun HomeList(viewModel: HomeViewModel) {
+fun HomeList(items: List<Item>, onAction: (Action, Int) -> Unit) {
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
-        itemsIndexed(viewModel.state) { index, item ->
+        itemsIndexed(items) { index, item ->
             HomeListItem(
                 item = item,
-                onAction = { viewModel.onAction(it, index) }
+                onAction = { onAction(it, index) }
             )
-            if (index < viewModel.state.size - 1) {
+            if (index < items.size - 1) {
                 Divider()
             }
         }
