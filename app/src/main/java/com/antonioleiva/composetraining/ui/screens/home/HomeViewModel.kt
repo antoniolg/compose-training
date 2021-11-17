@@ -4,18 +4,34 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.antonioleiva.composetraining.model.Item
 import com.antonioleiva.composetraining.model.itemList
 
 class HomeViewModel : ViewModel() {
-    var state by mutableStateOf(itemList)
+    var state by mutableStateOf(UiState(itemList))
         private set
 
     fun onAction(action: Action, index: Int) {
-        state = state.toMutableList().apply {
-            when (action) {
-                Action.CLONE -> add(index, get(index))
-                Action.DELETE -> removeAt(index)
-            }
+        val newItems = state.items.toMutableList()
+        val item = state.items[index]
+        state = when (action) {
+            Action.CLONE -> UiState(
+                items = newItems.apply { add(index, get(index)) },
+                message = "${item.title} cloned"
+            )
+            Action.DELETE -> UiState(
+                items = newItems.apply { removeAt(index) },
+                message = "${item.title} removed"
+            )
         }
     }
+
+    fun onMessageRemoved() {
+        state = state.copy(message = null)
+    }
+
+    data class UiState(
+        val items: List<Item> = emptyList(),
+        val message: String? = null
+    )
 }
