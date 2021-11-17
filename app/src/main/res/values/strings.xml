@@ -11,4 +11,5 @@
     <string name="more_actions">More actions</string>
     <string name="clone">Clone</string>
     <string name="delete">Delete</string>
+    <string name="change_view">Change view</string>
 </resources>

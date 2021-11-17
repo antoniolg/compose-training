@@ -2,11 +2,11 @@ package com.antonioleiva.composetraining.ui.screens.home
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
-import androidx.compose.runtime.Composable
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.GridView
+import androidx.compose.material.icons.filled.ViewList
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -27,14 +27,35 @@ fun Home(viewModel: HomeViewModel = viewModel()) {
 @ExperimentalFoundationApi
 @Composable
 fun Home(items: List<Item>, onAction: (Action, Int) -> Unit) {
+    var gridMode by remember { mutableStateOf(false) }
     Scaffold(
-        topBar = { TopAppBar(title = { Text(text = stringResource(R.string.app_name)) }) }
+        topBar = {
+            TopAppBar(
+                title = { Text(text = stringResource(R.string.app_name)) },
+                actions = {
+                    IconButton(onClick = { gridMode = !gridMode }) {
+                        Icon(
+                            imageVector = if (gridMode) Icons.Default.ViewList else Icons.Default.GridView,
+                            contentDescription = stringResource(R.string.change_view)
+                        )
+                    }
+                }
+            )
+        }
     ) { padding ->
-        HomeList(
-            items = items,
-            onAction = onAction,
-            modifier = Modifier.padding(padding)
-        )
+        if (gridMode) {
+            HomeGrid(
+                items = items,
+                onAction = onAction,
+                modifier = Modifier.padding(padding)
+            )
+        } else {
+            HomeList(
+                items = items,
+                onAction = onAction,
+                modifier = Modifier.padding(padding)
+            )
+        }
     }
 }
 
