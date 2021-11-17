@@ -14,7 +14,7 @@ import com.antonioleiva.composetraining.model.Item
 
 @ExperimentalMaterialApi
 @Composable
-fun CustomListItem(item: Item, onAction: (Action) -> Unit) {
+fun HomeListItem(item: Item, onAction: (Action) -> Unit) {
     var showMenu by remember { mutableStateOf(false) }
 
     ListItem(
