@@ -27,6 +27,11 @@ fun Home(viewModel: HomeViewModel = viewModel()) {
 @Composable
 fun Home(state: HomeViewModel.UiState, onAction: (Action, Int) -> Unit) {
     var gridMode by remember { mutableStateOf(false) }
+    val scaffoldState = rememberScaffoldState()
+
+    scaffoldState
+        .snackbarHostState
+        .showSnackbar("I'm here!")
 
     Scaffold(
         topBar = {
@@ -41,7 +46,8 @@ fun Home(state: HomeViewModel.UiState, onAction: (Action, Int) -> Unit) {
                     }
                 }
             )
-        }
+        },
+        scaffoldState = scaffoldState
     ) { padding ->
         if (gridMode) {
             HomeGrid(
