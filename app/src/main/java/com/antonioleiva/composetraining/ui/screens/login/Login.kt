@@ -10,6 +10,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -24,13 +25,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.antonioleiva.composetraining.ui.screens.Screen
 
 @Composable
-fun Login(viewModel: LoginViewModel = viewModel()) {
+fun Login(viewModel: LoginViewModel = viewModel(), onLoggedIn: () -> Unit) {
     val state = viewModel.state
     Screen {
-        val message = when {
-            state.loggedIn -> "Success"
-            state.error != null -> stringResource(id = state.error)
-            else -> null
+        LaunchedEffect(state.loggedIn){
+            if (state.loggedIn) {
+                onLoggedIn()
+            }
         }
 
         LoginForm(
@@ -38,7 +39,7 @@ fun Login(viewModel: LoginViewModel = viewModel()) {
                 .wrapContentSize()
                 .background(Color.Gray.copy(alpha = 0.2f))
                 .padding(16.dp),
-            message = message,
+            message = state.error?.let { stringResource(it) },
             onSubmit = viewModel::loginClicked
         )
     }
