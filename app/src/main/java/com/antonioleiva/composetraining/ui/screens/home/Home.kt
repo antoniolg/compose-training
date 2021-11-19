@@ -19,19 +19,32 @@ import com.antonioleiva.composetraining.ui.screens.Screen
 @ExperimentalMaterialApi
 @Composable
 fun Home(viewModel: HomeViewModel = viewModel()) {
-    Home(viewModel.state, viewModel::onAction)
+    Home(
+        state = viewModel.state,
+        onAction = viewModel::onAction,
+        onMessageRemoved = viewModel::onMessageRemoved
+    )
 }
 
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Composable
-fun Home(state: HomeViewModel.UiState, onAction: (Action, Int) -> Unit) {
+fun Home(
+    state: HomeViewModel.UiState,
+    onAction: (Action, Int) -> Unit,
+    onMessageRemoved: () -> Unit
+) {
     var gridMode by remember { mutableStateOf(false) }
     val scaffoldState = rememberScaffoldState()
 
-    scaffoldState
-        .snackbarHostState
-        .showSnackbar("I'm here!")
+    if (state.message != null) {
+        LaunchedEffect(state.message) {
+            scaffoldState
+                .snackbarHostState
+                .showSnackbar(state.message)
+            onMessageRemoved()
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -73,7 +86,8 @@ fun HomePreview() {
     Screen {
         Home(
             state = HomeViewModel.UiState(itemList),
-            onAction = { _, _ -> }
+            onAction = { _, _ -> },
+            onMessageRemoved = {}
         )
     }
 }
