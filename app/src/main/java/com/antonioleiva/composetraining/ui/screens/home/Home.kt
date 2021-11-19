@@ -38,9 +38,14 @@ fun Home(
 ) {
     var gridMode by remember { mutableStateOf(false) }
     val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
 
     val onItemClick: (Item) -> Unit = { item ->
-        //TODO
+        scope.launch {
+            scaffoldState
+                .snackbarHostState
+                .showSnackbar("${item.title} clicked")
+        }
     }
 
     if (state.message != null) {
