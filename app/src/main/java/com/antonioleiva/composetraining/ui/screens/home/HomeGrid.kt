@@ -1,6 +1,7 @@
 package com.antonioleiva.composetraining.ui.screens.home
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.GridCells
@@ -15,6 +16,7 @@ import com.antonioleiva.composetraining.model.Item
 @Composable
 fun HomeGrid(
     items: List<Item>,
+    onItemClick: (Item) -> Unit,
     onAction: (Action, Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -26,7 +28,8 @@ fun HomeGrid(
         itemsIndexed(items) { index, item ->
             HomeGridItem(
                 item = item,
-                onAction = { onAction(it, index) }
+                onAction = { onAction(it, index) },
+                modifier = Modifier.clickable { onItemClick(item) }
             )
         }
     }
