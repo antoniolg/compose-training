@@ -1,6 +1,8 @@
 package com.antonioleiva.composetraining.ui.screens.login
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -28,7 +30,7 @@ import com.antonioleiva.composetraining.ui.screens.Screen
 fun Login(viewModel: LoginViewModel = viewModel(), onLoggedIn: () -> Unit) {
     val state = viewModel.state
     Screen {
-        LaunchedEffect(state.loggedIn){
+        LaunchedEffect(state.loggedIn) {
             if (state.loggedIn) {
                 onLoggedIn()
             }
@@ -74,14 +76,17 @@ fun LoginForm(
             isError = isError,
             onDone = { if (buttonEnabled) onSubmit(user, pass) }
         )
-        Button(
-            enabled = buttonEnabled,
-            onClick = { onSubmit(user, pass) },
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Login")
+        AnimatedVisibility(buttonEnabled){
+            Button(
+                onClick = { onSubmit(user, pass) },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Login")
+            }
         }
-        if (message != null) {
+
+        AnimatedVisibility(message != null) {
+            requireNotNull(message)
             Text(
                 text = message,
                 color = MaterialTheme.colors.error,
@@ -91,6 +96,7 @@ fun LoginForm(
     }
 }
 
+@ExperimentalAnimationApi
 @Preview("Login Light")
 @Preview("Login Dark", uiMode = UI_MODE_NIGHT_YES)
 @Composable
