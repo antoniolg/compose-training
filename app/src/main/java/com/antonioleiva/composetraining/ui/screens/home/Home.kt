@@ -37,12 +37,11 @@ fun Home(
     onMessageRemoved: () -> Unit,
     onItemClick: (Item) -> Unit
 ) {
-    var gridMode by remember { mutableStateOf(false) }
-    val scaffoldState = rememberScaffoldState()
+    val homeState = rememberHomeState()
 
     if (state.message != null) {
         LaunchedEffect(state.message) {
-            scaffoldState
+            homeState.scaffoldState
                 .snackbarHostState
                 .showSnackbar(state.message)
             onMessageRemoved()
@@ -54,18 +53,18 @@ fun Home(
             TopAppBar(
                 title = { Text(text = stringResource(R.string.app_name)) },
                 actions = {
-                    IconButton(onClick = { gridMode = !gridMode }) {
+                    IconButton(onClick = { homeState.gridMode.value = !homeState.gridMode.value }) {
                         Icon(
-                            imageVector = if (gridMode) Icons.Default.ViewList else Icons.Default.GridView,
+                            imageVector = if (homeState.gridMode.value) Icons.Default.ViewList else Icons.Default.GridView,
                             contentDescription = stringResource(R.string.change_view)
                         )
                     }
                 }
             )
         },
-        scaffoldState = scaffoldState
+        scaffoldState = homeState.scaffoldState
     ) { padding ->
-        if (gridMode) {
+        if (homeState.gridMode.value) {
             HomeGrid(
                 items = state.items,
                 onItemClick = onItemClick,
