@@ -3,19 +3,19 @@ package com.antonioleiva.composetraining.ui.screens.login
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.animateDp
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -36,10 +36,25 @@ fun Login(viewModel: LoginViewModel = viewModel(), onLoggedIn: () -> Unit) {
             }
         }
 
+        val transition = updateTransition(
+            targetState = state.error != null,
+            label = "bgTransition"
+        )
+        val borderWidth by transition.animateDp(label = "borderWidth") {
+            if (it) 8.dp else 0.dp
+        }
+        val bgColor by transition.animateColor(label = "borderColor") {
+            if (it)
+                MaterialTheme.colors.error.copy(alpha = 0.2f)
+            else
+                Color.Gray.copy(alpha = 0.2f)
+        }
+
         LoginForm(
             modifier = Modifier
                 .wrapContentSize()
-                .background(Color.Gray.copy(alpha = 0.2f))
+                .background(bgColor)
+                .border(width = borderWidth, color = Color.Black)
                 .padding(16.dp),
             message = state.error?.let { stringResource(it) },
             onSubmit = viewModel::loginClicked
@@ -76,7 +91,7 @@ fun LoginForm(
             isError = isError,
             onDone = { if (buttonEnabled) onSubmit(user, pass) }
         )
-        AnimatedVisibility(buttonEnabled){
+        AnimatedVisibility(buttonEnabled) {
             Button(
                 onClick = { onSubmit(user, pass) },
                 modifier = Modifier.fillMaxWidth()
@@ -86,12 +101,13 @@ fun LoginForm(
         }
 
         AnimatedVisibility(message != null) {
-            requireNotNull(message)
-            Text(
-                text = message,
-                color = MaterialTheme.colors.error,
-                textAlign = TextAlign.Center
-            )
+            if (message != null) {
+                Text(
+                    text = message,
+                    color = MaterialTheme.colors.error,
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
 }
