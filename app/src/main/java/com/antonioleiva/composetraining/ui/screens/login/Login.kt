@@ -4,8 +4,7 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateColor
-import androidx.compose.animation.core.animateDp
-import androidx.compose.animation.core.updateTransition
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
@@ -36,25 +35,21 @@ fun Login(viewModel: LoginViewModel = viewModel(), onLoggedIn: () -> Unit) {
             }
         }
 
-        val transition = updateTransition(
-            targetState = state.error != null,
-            label = "bgTransition"
-        )
-        val borderWidth by transition.animateDp(label = "borderWidth") {
-            if (it) 8.dp else 0.dp
-        }
-        val bgColor by transition.animateColor(label = "borderColor") {
-            if (it)
-                MaterialTheme.colors.error.copy(alpha = 0.2f)
-            else
-                Color.Gray.copy(alpha = 0.2f)
-        }
+        val infiniteTransition = rememberInfiniteTransition()
+        val bgColor by infiniteTransition.animateColor(
+            initialValue = Color.White,
+            targetValue = Color.LightGray,
+            animationSpec = infiniteRepeatable(
+                animation = keyframes {
+                    durationMillis = 1000
+                },
+                repeatMode = RepeatMode.Reverse
+            ))
 
         LoginForm(
             modifier = Modifier
                 .wrapContentSize()
                 .background(bgColor)
-                .border(width = borderWidth, color = Color.Black)
                 .padding(16.dp),
             message = state.error?.let { stringResource(it) },
             onSubmit = viewModel::loginClicked
