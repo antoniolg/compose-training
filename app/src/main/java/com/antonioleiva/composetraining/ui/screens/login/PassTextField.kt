@@ -30,7 +30,7 @@ fun PassTextField(
 ) {
     var passRevealed by rememberSaveable { mutableStateOf(false) }
 
-    TextField(
+    BgTextField(
         value = pass,
         onValueChange = setPass,
         singleLine = true,

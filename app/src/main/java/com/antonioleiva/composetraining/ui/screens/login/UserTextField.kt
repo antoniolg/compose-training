@@ -15,7 +15,7 @@ fun UserTextField(
     setUser: (String) -> Unit,
     isError: Boolean = false
 ) {
-    TextField(
+    BgTextField(
         value = user,
         onValueChange = setUser,
         singleLine = true,
