@@ -1,5 +1,6 @@
 package com.antonioleiva.composetraining.ui.screens.login
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.foundation.text.KeyboardActions
@@ -42,6 +43,7 @@ fun BgTextField(
         MaterialTheme.colors.onSurface.copy(alpha = TextFieldDefaults.BackgroundOpacity)
     val activeBgColor = MaterialTheme.colors.surface
     var bgColor by remember { mutableStateOf(defaultBgColor) }
+    val bgAnimatedColor by animateColorAsState(targetValue = bgColor)
 
     TextField(
         value = value,
@@ -64,6 +66,6 @@ fun BgTextField(
         maxLines = maxLines,
         interactionSource = interactionSource,
         shape = shape,
-        colors = TextFieldDefaults.textFieldColors(backgroundColor = bgColor)
+        colors = TextFieldDefaults.textFieldColors(backgroundColor = bgAnimatedColor)
     )
 }
