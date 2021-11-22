@@ -7,7 +7,8 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.GridView
 import androidx.compose.material.icons.filled.ViewList
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -55,30 +56,41 @@ fun Home(
                 title = { Text(text = stringResource(R.string.app_name)) },
                 actions = {
                     IconButton(onClick = { homeState.gridMode.value = !homeState.gridMode.value }) {
-                        Icon(
-                            imageVector = if (homeState.gridMode.value) Icons.Default.ViewList else Icons.Default.GridView,
-                            contentDescription = stringResource(R.string.change_view)
-                        )
+                        Crossfade(targetState = homeState.gridMode.value) { state ->
+                            if (state) {
+                                Icon(
+                                    imageVector = Icons.Default.ViewList,
+                                    contentDescription = stringResource(R.string.change_view)
+                                )
+                            } else {
+                                Icon(
+                                    imageVector = Icons.Default.GridView,
+                                    contentDescription = stringResource(R.string.change_view)
+                                )
+                            }
+                        }
                     }
                 }
             )
         },
         scaffoldState = homeState.scaffoldState
     ) { padding ->
-        if (homeState.gridMode.value) {
-            HomeGrid(
-                items = state.items,
-                onItemClick = onItemClick,
-                onAction = onAction,
-                modifier = Modifier.padding(padding)
-            )
-        } else {
-            HomeList(
-                items = state.items,
-                onItemClick = onItemClick,
-                onAction = onAction,
-                modifier = Modifier.padding(padding)
-            )
+        Crossfade(targetState = homeState.gridMode.value) { gridMode ->
+            if (gridMode) {
+                HomeGrid(
+                    items = state.items,
+                    onItemClick = onItemClick,
+                    onAction = onAction,
+                    modifier = Modifier.padding(padding)
+                )
+            } else {
+                HomeList(
+                    items = state.items,
+                    onItemClick = onItemClick,
+                    onAction = onAction,
+                    modifier = Modifier.padding(padding)
+                )
+            }
         }
     }
 }
