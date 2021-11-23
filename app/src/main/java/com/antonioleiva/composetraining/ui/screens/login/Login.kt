@@ -3,17 +3,17 @@ package com.antonioleiva.composetraining.ui.screens.login
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.animateColor
-import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,21 +35,10 @@ fun Login(viewModel: LoginViewModel = viewModel(), onLoggedIn: () -> Unit) {
             }
         }
 
-        val infiniteTransition = rememberInfiniteTransition()
-        val bgColor by infiniteTransition.animateColor(
-            initialValue = Color.White,
-            targetValue = Color.LightGray,
-            animationSpec = infiniteRepeatable(
-                animation = keyframes {
-                    durationMillis = 1000
-                },
-                repeatMode = RepeatMode.Reverse
-            ))
-
         LoginForm(
             modifier = Modifier
                 .wrapContentSize()
-                .background(bgColor)
+                .background(Color.Gray.copy(alpha = 0.2f))
                 .padding(16.dp),
             message = state.error?.let { stringResource(it) },
             onSubmit = viewModel::loginClicked
