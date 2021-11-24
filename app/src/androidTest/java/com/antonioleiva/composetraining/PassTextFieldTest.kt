@@ -4,7 +4,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.*
 import androidx.compose.runtime.remember
-import androidx.test.platform.app.InstrumentationRegistry
 import com.antonioleiva.composetraining.ui.screens.login.PASS_REVEAL_ICON_TEST_TAG
 import com.antonioleiva.composetraining.ui.screens.login.PASS_TEXT_FIELD_TEST_TAG
 import com.antonioleiva.composetraining.ui.screens.login.PassTextField
@@ -16,8 +15,6 @@ class PassTextFieldTest {
 
     @get:Rule
     val composeTestRule = createComposeRule()
-
-    private val ctx = InstrumentationRegistry.getInstrumentation().targetContext
 
     @Before
     fun setUp() {
