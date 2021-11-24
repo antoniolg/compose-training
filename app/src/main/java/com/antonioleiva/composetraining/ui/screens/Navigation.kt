@@ -1,9 +1,9 @@
 package com.antonioleiva.composetraining.ui.screens
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -28,8 +28,7 @@ enum class NavArgs(val key: String) {
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Composable
-fun Navigation() {
-    val navController = rememberNavController()
+fun Navigation(navController: NavHostController = rememberNavController()) {
 
     Screen {
         NavHost(
