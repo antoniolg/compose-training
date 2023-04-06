@@ -3,8 +3,9 @@ package com.antonioleiva.composetraining.ui.screens.home
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Text
@@ -26,14 +27,14 @@ fun Home() {
         LazyColumn(
             modifier = Modifier.fillMaxSize()
         ) {
-            items(itemList) {
+            itemsIndexed(itemList) { index, item ->
                 ListItem(
-                    headlineText = { Text(it.title) },
-                    supportingText = { Text(it.subtitle) },
+                    headlineText = { Text(item.title) },
+                    supportingText = { Text(item.subtitle) },
                     leadingContent = {
                         AsyncImage(
                             model = ImageRequest.Builder(LocalContext.current)
-                                .data(it.thumb)
+                                .data(item.thumb)
                                 .crossfade(true)
                                 .build(),
                             contentDescription = null,
@@ -43,6 +44,9 @@ fun Home() {
                         )
                     }
                 )
+                if (index < itemList.size - 1) {
+                    Divider()
+                }
             }
         }
     }
