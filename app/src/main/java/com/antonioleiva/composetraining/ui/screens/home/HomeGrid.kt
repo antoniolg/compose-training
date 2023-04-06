@@ -9,10 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.antonioleiva.composetraining.model.Item
+import androidx.compose.foundation.clickable
 
 @Composable
 fun HomeGrid(
     items: List<Item>,
+    onItemClick: (Item) -> Unit,
     onAction: (Action, Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -24,7 +26,8 @@ fun HomeGrid(
         itemsIndexed(items) { index, item ->
             HomeGridItem(
                 item = item,
-                onAction = { onAction(it, index) }
+                onAction = { onAction(it, index) },
+                modifier = Modifier.clickable { onItemClick(item) }
             )
         }
     }

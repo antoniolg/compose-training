@@ -18,7 +18,7 @@ import com.antonioleiva.composetraining.model.Item
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeListItem(item: Item, onAction: (Action) -> Unit) {
+fun HomeListItem(item: Item, onAction: (Action) -> Unit, modifier: Modifier = Modifier) {
     var showMenu by remember { mutableStateOf(false) }
 
     ListItem(
@@ -48,6 +48,7 @@ fun HomeListItem(item: Item, onAction: (Action) -> Unit) {
                 onDismissRequest = { showMenu = false },
                 onAction = onAction
             )
-        }
+        },
+        modifier = modifier
     )
 }

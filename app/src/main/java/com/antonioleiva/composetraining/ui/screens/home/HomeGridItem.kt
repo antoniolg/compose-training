@@ -23,10 +23,10 @@ import com.antonioleiva.composetraining.R
 import com.antonioleiva.composetraining.model.Item
 
 @Composable
-fun HomeGridItem(item: Item, onAction: (Action) -> Unit) {
+fun HomeGridItem(item: Item, onAction: (Action) -> Unit, modifier: Modifier = Modifier) {
     var showMenu by remember { mutableStateOf(false) }
     Column(
-        modifier = Modifier.padding(2.dp)
+        modifier = modifier.padding(2.dp)
     ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)

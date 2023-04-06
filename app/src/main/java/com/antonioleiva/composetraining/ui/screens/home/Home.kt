@@ -11,6 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.antonioleiva.composetraining.R
+import com.antonioleiva.composetraining.model.Item
 import com.antonioleiva.composetraining.model.itemList
 import com.antonioleiva.composetraining.ui.screens.Screen
 
@@ -33,6 +34,10 @@ fun Home(
     Screen {
         var gridMode by remember { mutableStateOf(false) }
         val snackbarHostState = remember { SnackbarHostState() }
+
+        val onItemClick: (Item) -> Unit = { item ->
+            //TODO
+        }
 
         if (state.message != null) {
             LaunchedEffect(state.message) {
@@ -60,12 +65,13 @@ fun Home(
             if (gridMode) {
                 HomeGrid(
                     items = state.items,
-                    onAction = onAction,
+                    onItemClick = onItemClick, onAction = onAction,
                     modifier = Modifier.padding(padding)
                 )
             } else {
                 HomeList(
                     items = state.items,
+                    onItemClick = onItemClick,
                     onAction = onAction,
                     modifier = Modifier.padding(padding)
                 )
