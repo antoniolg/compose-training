@@ -16,18 +16,30 @@ import com.antonioleiva.composetraining.ui.screens.Screen
 
 @Composable
 fun Home(viewModel: HomeViewModel = viewModel()) {
-    Home(viewModel.state, viewModel::onAction)
+    Home(
+        state = viewModel.state,
+        onAction = viewModel::onAction,
+        onMessageRemoved = viewModel::onMessageRemoved
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Home(state: HomeViewModel.UiState, onAction: (Action, Int) -> Unit) {
+fun Home(
+    state: HomeViewModel.UiState,
+    onAction: (Action, Int) -> Unit,
+    onMessageRemoved: () -> Unit
+) {
     Screen {
         var gridMode by remember { mutableStateOf(false) }
         val snackbarHostState = remember { SnackbarHostState() }
 
-        snackbarHostState
-            .showSnackbar("I'm here!")
+        if (state.message != null) {
+            LaunchedEffect(state.message) {
+                snackbarHostState.showSnackbar(state.message)
+                onMessageRemoved()
+            }
+        }
 
         Scaffold(
             topBar = {
@@ -67,6 +79,6 @@ fun Home(state: HomeViewModel.UiState, onAction: (Action, Int) -> Unit) {
 fun HomePreview() {
     Home(
         state = HomeViewModel.UiState(itemList),
-        onAction = { _, _ -> }
-    )
+        onAction = { _, _ -> },
+        onMessageRemoved = {})
 }
