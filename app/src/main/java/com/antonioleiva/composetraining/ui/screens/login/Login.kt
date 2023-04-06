@@ -11,6 +11,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,8 +35,8 @@ fun Login() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginForm(modifier: Modifier = Modifier) {
-    var user by remember { mutableStateOf("") }
-    var pass by remember { mutableStateOf("") }
+    var user by rememberSaveable { mutableStateOf("") }
+    var pass by rememberSaveable { mutableStateOf("") }
     val buttonEnabled = user.isNotEmpty() && pass.isNotEmpty()
     val context = LocalContext.current
 
