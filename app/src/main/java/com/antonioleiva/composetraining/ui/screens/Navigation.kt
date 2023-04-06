@@ -1,6 +1,7 @@
 package com.antonioleiva.composetraining.ui.screens
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -23,8 +24,7 @@ enum class NavArgs(val key: String) {
 }
 
 @Composable
-fun Navigation() {
-    val navController = rememberNavController()
+fun Navigation(navController: NavHostController = rememberNavController()) {
 
     Screen {
         NavHost(
