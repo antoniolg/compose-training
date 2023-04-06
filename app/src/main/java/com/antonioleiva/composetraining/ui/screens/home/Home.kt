@@ -14,14 +14,14 @@ import com.antonioleiva.composetraining.R
 import com.antonioleiva.composetraining.model.Item
 import com.antonioleiva.composetraining.model.itemList
 import com.antonioleiva.composetraining.ui.screens.Screen
-import kotlinx.coroutines.launch
 
 @Composable
-fun Home(viewModel: HomeViewModel = viewModel()) {
+fun Home(onItemClick: (Item) -> Unit, viewModel: HomeViewModel = viewModel()) {
     Home(
         state = viewModel.state,
         onAction = viewModel::onAction,
-        onMessageRemoved = viewModel::onMessageRemoved
+        onMessageRemoved = viewModel::onMessageRemoved,
+        onItemClick = onItemClick
     )
 }
 
@@ -30,19 +30,12 @@ fun Home(viewModel: HomeViewModel = viewModel()) {
 fun Home(
     state: HomeViewModel.UiState,
     onAction: (Action, Int) -> Unit,
-    onMessageRemoved: () -> Unit
+    onMessageRemoved: () -> Unit,
+    onItemClick: (Item) -> Unit
 ) {
     Screen {
         var gridMode by remember { mutableStateOf(false) }
         val snackbarHostState = remember { SnackbarHostState() }
-        val scope = rememberCoroutineScope()
-
-        val onItemClick: (Item) -> Unit = { item ->
-            scope.launch {
-                snackbarHostState.currentSnackbarData?.dismiss()
-                snackbarHostState.showSnackbar("${item.title} clicked")
-            }
-        }
 
         if (state.message != null) {
             LaunchedEffect(state.message) {
@@ -91,5 +84,7 @@ fun HomePreview() {
     Home(
         state = HomeViewModel.UiState(itemList),
         onAction = { _, _ -> },
-        onMessageRemoved = {})
+        onMessageRemoved = {},
+        onItemClick = {}
+    )
 }
