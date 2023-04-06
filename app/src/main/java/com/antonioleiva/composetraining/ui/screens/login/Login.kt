@@ -2,10 +2,7 @@ package com.antonioleiva.composetraining.ui.screens.login
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -23,10 +20,12 @@ import com.antonioleiva.composetraining.ui.screens.Screen
 @Composable
 fun Login() {
     Screen {
-        LoginForm(modifier = Modifier
-            .wrapContentSize()
-            .background(Color.Gray.copy(alpha = 0.2f))
-            .padding(16.dp))
+        LoginForm(
+            modifier = Modifier
+                .wrapContentSize()
+                .background(Color.Gray.copy(alpha = 0.2f))
+                .padding(16.dp)
+        )
     }
 }
 
@@ -36,11 +35,16 @@ fun LoginForm(modifier: Modifier = Modifier) {
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.verticalScroll(rememberScrollState())
+        modifier = modifier
+            .verticalScroll(rememberScrollState())
+            .width(IntrinsicSize.Min)
     ) {
         TextField(value = "user", onValueChange = {})
         TextField(value = "password", onValueChange = {})
-        Button(onClick = { }) {
+        Button(
+            onClick = { },
+            modifier = Modifier.fillMaxWidth()
+        ) {
             Text("Login")
         }
     }
