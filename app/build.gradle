@@ -55,6 +55,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
     implementation 'androidx.activity:activity-compose:1.7.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1'
+    implementation "io.coil-kt:coil-compose:2.2.2"
     testImplementation 'junit:junit:4.13.2'
 
     androidTestImplementation platform("androidx.compose:compose-bom:$compose_bom_version")
