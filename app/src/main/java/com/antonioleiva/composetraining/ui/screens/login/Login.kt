@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.antonioleiva.composetraining.R
 import com.antonioleiva.composetraining.ui.screens.Screen
 
 @Composable
@@ -76,7 +77,7 @@ fun LoginForm(
                 onClick = { onSubmit(user, pass) },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Login")
+                Text(stringResource(id = R.string.login))
             }
         }
 
