@@ -24,6 +24,11 @@ fun Home(viewModel: HomeViewModel = viewModel()) {
 fun Home(state: HomeViewModel.UiState, onAction: (Action, Int) -> Unit) {
     Screen {
         var gridMode by remember { mutableStateOf(false) }
+        val snackbarHostState = remember { SnackbarHostState() }
+
+        snackbarHostState
+            .showSnackbar("I'm here!")
+
         Scaffold(
             topBar = {
                 TopAppBar(
@@ -37,7 +42,8 @@ fun Home(state: HomeViewModel.UiState, onAction: (Action, Int) -> Unit) {
                         }
                     }
                 )
-            }
+            },
+            snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
         ) { padding ->
             if (gridMode) {
                 HomeGrid(
