@@ -9,9 +9,13 @@ import androidx.compose.ui.Modifier
 import com.antonioleiva.composetraining.model.Item
 
 @Composable
-fun HomeList(items: List<Item>, onAction: (Action, Int) -> Unit) {
+fun HomeList(
+    items: List<Item>,
+    onAction: (Action, Int) -> Unit,
+    modifier: Modifier = Modifier
+) {
     LazyColumn(
-        modifier = Modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
         itemsIndexed(items) { index, item ->
             HomeListItem(

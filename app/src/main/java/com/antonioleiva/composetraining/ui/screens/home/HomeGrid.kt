@@ -11,10 +11,14 @@ import androidx.compose.ui.unit.dp
 import com.antonioleiva.composetraining.model.Item
 
 @Composable
-fun HomeGrid(items: List<Item>, onAction: (Action, Int) -> Unit) {
+fun HomeGrid(
+    items: List<Item>,
+    onAction: (Action, Int) -> Unit,
+    modifier: Modifier = Modifier
+) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(180.dp),
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(2.dp)
     ) {
         itemsIndexed(items) { index, item ->
