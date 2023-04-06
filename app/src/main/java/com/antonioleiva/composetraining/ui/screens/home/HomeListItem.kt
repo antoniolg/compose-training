@@ -9,9 +9,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.antonioleiva.composetraining.R
 import com.antonioleiva.composetraining.model.Item
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -38,7 +40,7 @@ fun HomeListItem(item: Item, onAction: (Action) -> Unit) {
             IconButton(onClick = { showMenu = true }) {
                 Icon(
                     imageVector = Icons.Default.MoreVert,
-                    contentDescription = "More Actions"
+                    contentDescription = stringResource(R.string.more_actions)
                 )
             }
             ItemDropdownMenu(
