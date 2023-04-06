@@ -10,11 +10,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -22,12 +20,14 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import com.antonioleiva.composetraining.R
 
+const val PASS_REVEAL_ICON_TEST_TAG = "PassRevealIconTestTag"
+const val PASS_TEXT_FIELD_TEST_TAG = "PassTextFieldTestTag"
+
 @Composable
 fun PassTextField(
     pass: String,
     setPass: (String) -> Unit,
     isError: Boolean = false,
-    focusRequester: FocusRequester = remember { FocusRequester() },
     onDone: () -> Unit = {}
 ) {
     val (passRevealed, setPassRevealed) = rememberSaveable { mutableStateOf(false) }
@@ -35,7 +35,7 @@ fun PassTextField(
     BgTextField(
         value = pass,
         onValueChange = setPass,
-        modifier = Modifier.focusRequester(focusRequester),
+        modifier = Modifier.testTag(PASS_TEXT_FIELD_TEST_TAG),
         singleLine = true,
         label = { Text(stringResource(id = R.string.password)) },
         placeholder = { Text(stringResource(id = R.string.pass_placeholder)) },
@@ -52,7 +52,10 @@ fun PassTextField(
 
 @Composable
 private fun PasswordVisibilityIcon(passRevealed: Boolean, setPassRevealed: (Boolean) -> Unit) {
-    IconButton(onClick = { setPassRevealed(!passRevealed) }) {
+    IconButton(
+        onClick = { setPassRevealed(!passRevealed) },
+        modifier = Modifier.testTag(PASS_REVEAL_ICON_TEST_TAG)
+    ) {
         if (passRevealed) {
             Icon(
                 imageVector = Icons.Default.VisibilityOff,

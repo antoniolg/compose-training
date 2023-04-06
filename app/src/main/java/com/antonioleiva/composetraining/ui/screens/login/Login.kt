@@ -14,7 +14,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -52,7 +51,6 @@ fun LoginForm(
     var user by rememberSaveable { mutableStateOf("") }
     var pass by rememberSaveable { mutableStateOf("") }
     val buttonEnabled = user.isNotEmpty() && pass.isNotEmpty()
-    val focusRequester = remember { FocusRequester() }
     val isError = message != null
 
     Column(
@@ -65,14 +63,12 @@ fun LoginForm(
         UserTextField(
             user = user,
             setUser = { user = it },
-            isError = isError,
-            focusRequester = focusRequester
+            isError = isError
         )
         PassTextField(
             pass = pass,
             setPass = { pass = it },
             isError = isError,
-            focusRequester = focusRequester,
             onDone = { if (buttonEnabled) onSubmit(user, pass) }
         )
         AnimatedVisibility(buttonEnabled) {
