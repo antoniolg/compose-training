@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Compose Training</string>
+    <string name="wrong_username">User should be a valid email</string>
+    <string name="short_password">Password should be at least 5 characters</string>
 </resources>
