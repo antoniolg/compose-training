@@ -22,13 +22,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.antonioleiva.composetraining.ui.screens.Screen
 
 @Composable
-fun Login(viewModel: LoginViewModel = viewModel()) {
+fun Login(viewModel: LoginViewModel = viewModel(), onLoggedIn: () -> Unit) {
     val state = viewModel.state
     Screen {
-        val message = when {
-            state.loggedIn -> "Success"
-            state.error != null -> stringResource(id = state.error)
-            else -> null
+        LaunchedEffect(state.loggedIn){
+            if (state.loggedIn) {
+                onLoggedIn()
+            }
         }
 
         LoginForm(
@@ -36,7 +36,7 @@ fun Login(viewModel: LoginViewModel = viewModel()) {
                 .wrapContentSize()
                 .background(Color.Gray.copy(alpha = 0.2f))
                 .padding(16.dp),
-            message = message,
+            message = state.error?.let { stringResource(it) },
             onSubmit = viewModel::loginClicked
         )
     }
