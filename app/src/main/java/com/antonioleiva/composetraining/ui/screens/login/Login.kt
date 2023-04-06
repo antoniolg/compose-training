@@ -2,7 +2,11 @@ package com.antonioleiva.composetraining.ui.screens.login
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.animateDp
+import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -14,7 +18,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,10 +35,25 @@ fun Login(viewModel: LoginViewModel = viewModel(), onLoggedIn: () -> Unit) {
             }
         }
 
+        val transition = updateTransition(
+            targetState = state.error != null,
+            label = "bgTransition"
+        )
+        val borderWidth by transition.animateDp(label = "borderWidth") {
+            if (it) 8.dp else (-1).dp
+        }
+        val bgColor by transition.animateColor(label = "borderColor") {
+            if (it)
+                MaterialTheme.colorScheme.errorContainer
+            else
+                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
+        }
+
         LoginForm(
             modifier = Modifier
                 .wrapContentSize()
-                .background(Color.Gray.copy(alpha = 0.2f))
+                .background(bgColor)
+                .border(width = borderWidth, color = MaterialTheme.colorScheme.error)
                 .padding(16.dp),
             message = state.error?.let { stringResource(it) },
             onSubmit = viewModel::loginClicked
@@ -75,7 +93,7 @@ fun LoginForm(
             focusRequester = focusRequester,
             onDone = { if (buttonEnabled) onSubmit(user, pass) }
         )
-        AnimatedVisibility(buttonEnabled){
+        AnimatedVisibility(buttonEnabled) {
             Button(
                 onClick = { onSubmit(user, pass) },
                 modifier = Modifier.fillMaxWidth()
@@ -85,12 +103,13 @@ fun LoginForm(
         }
 
         AnimatedVisibility(message != null) {
-            requireNotNull(message)
-            Text(
-                text = message,
-                color = MaterialTheme.colorScheme.error,
-                textAlign = TextAlign.Center
-            )
+            if (message != null) {
+                Text(
+                    text = message,
+                    color = MaterialTheme.colorScheme.error,
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
 }
