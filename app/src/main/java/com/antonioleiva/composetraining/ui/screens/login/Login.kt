@@ -2,7 +2,6 @@ package com.antonioleiva.composetraining.ui.screens.login
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -33,21 +32,10 @@ fun Login(viewModel: LoginViewModel = viewModel(), onLoggedIn: () -> Unit) {
             }
         }
 
-        val infiniteTransition = rememberInfiniteTransition()
-        val bgColor by infiniteTransition.animateColor(
-            initialValue = MaterialTheme.colorScheme.surface,
-            targetValue = MaterialTheme.colorScheme.surfaceVariant,
-            animationSpec = infiniteRepeatable(
-                animation = keyframes {
-                    durationMillis = 1000
-                },
-                repeatMode = RepeatMode.Reverse
-            ))
-
         LoginForm(
             modifier = Modifier
                 .wrapContentSize()
-                .background(bgColor)
+                .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
                 .padding(16.dp),
             message = state.error?.let { stringResource(it) },
             onSubmit = viewModel::loginClicked
