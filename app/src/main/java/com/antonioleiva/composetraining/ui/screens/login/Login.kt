@@ -6,16 +6,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -45,7 +42,6 @@ fun Login(viewModel: LoginViewModel = viewModel()) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginForm(
     modifier: Modifier = Modifier,
@@ -55,6 +51,8 @@ fun LoginForm(
     var user by rememberSaveable { mutableStateOf("") }
     var pass by rememberSaveable { mutableStateOf("") }
     val buttonEnabled = user.isNotEmpty() && pass.isNotEmpty()
+    val focusRequester = remember { FocusRequester() }
+    val isError = message != null
 
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
@@ -63,8 +61,19 @@ fun LoginForm(
             .verticalScroll(rememberScrollState())
             .width(IntrinsicSize.Min)
     ) {
-        TextField(value = user, onValueChange = { user = it })
-        TextField(value = pass, onValueChange = { pass = it })
+        UserTextField(
+            user = user,
+            setUser = { user = it },
+            isError = isError,
+            focusRequester = focusRequester
+        )
+        PassTextField(
+            pass = pass,
+            setPass = { pass = it },
+            isError = isError,
+            focusRequester = focusRequester,
+            onDone = { if (buttonEnabled) onSubmit(user, pass) }
+        )
         Button(
             enabled = buttonEnabled,
             onClick = { onSubmit(user, pass) },
