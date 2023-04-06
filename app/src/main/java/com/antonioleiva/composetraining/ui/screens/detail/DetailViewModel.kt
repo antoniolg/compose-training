@@ -6,17 +6,16 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.antonioleiva.composetraining.model.Item
-import com.antonioleiva.composetraining.model.itemList
 import com.antonioleiva.composetraining.ui.screens.NavArgs
 
 class DetailViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
-    private val itemId: Int = savedStateHandle[NavArgs.ItemId.key] ?: -1
+    private val item: Item = savedStateHandle[NavArgs.ItemId.key]!!
 
     var state by mutableStateOf<Item?>(null)
         private set
 
     init {
-        state = itemList.find { it.id == itemId }
+        state = item
     }
 }
