@@ -3,10 +3,8 @@ package com.antonioleiva.composetraining.ui.screens.login
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.animateColor
-import androidx.compose.animation.core.animateDp
-import androidx.compose.animation.core.updateTransition
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -35,25 +33,21 @@ fun Login(viewModel: LoginViewModel = viewModel(), onLoggedIn: () -> Unit) {
             }
         }
 
-        val transition = updateTransition(
-            targetState = state.error != null,
-            label = "bgTransition"
-        )
-        val borderWidth by transition.animateDp(label = "borderWidth") {
-            if (it) 8.dp else (-1).dp
-        }
-        val bgColor by transition.animateColor(label = "borderColor") {
-            if (it)
-                MaterialTheme.colorScheme.errorContainer
-            else
-                MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
-        }
+        val infiniteTransition = rememberInfiniteTransition()
+        val bgColor by infiniteTransition.animateColor(
+            initialValue = MaterialTheme.colorScheme.surface,
+            targetValue = MaterialTheme.colorScheme.surfaceVariant,
+            animationSpec = infiniteRepeatable(
+                animation = keyframes {
+                    durationMillis = 1000
+                },
+                repeatMode = RepeatMode.Reverse
+            ))
 
         LoginForm(
             modifier = Modifier
                 .wrapContentSize()
                 .background(bgColor)
-                .border(width = borderWidth, color = MaterialTheme.colorScheme.error)
                 .padding(16.dp),
             message = state.error?.let { stringResource(it) },
             onSubmit = viewModel::loginClicked
