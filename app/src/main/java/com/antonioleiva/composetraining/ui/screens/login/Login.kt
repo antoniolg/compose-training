@@ -14,6 +14,10 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,14 +43,32 @@ fun Login(modifier: Modifier = Modifier) {
 
 @Composable
 private fun LoginForm(modifier: Modifier = Modifier) {
+    var user by remember { mutableStateOf("") }
+    var pass by remember { mutableStateOf("") }
+    val isLoginEnabled = user.isNotBlank() && pass.isNotBlank()
+
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
-        OutlinedTextField(value = "user", onValueChange = {})
-        OutlinedTextField(value = "password", onValueChange = {})
-        Button(onClick = { }) {
+        OutlinedTextField(
+            value = user,
+            onValueChange = { user = it },
+            label = { Text("Usuario") }
+        )
+        OutlinedTextField(
+            value = pass,
+            onValueChange = { pass = it },
+            label = { Text("Contraseña") }
+        )
+        Button(
+            onClick = {
+                user = ""
+                pass = ""
+            },
+            enabled = isLoginEnabled
+        ) {
             Text("Login")
         }
     }
