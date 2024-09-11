@@ -4,8 +4,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -27,14 +28,17 @@ fun Home() {
                 .padding(innerPadding)
                 .fillMaxSize()
         ) {
-            items(itemList) {
+            itemsIndexed(itemList) { index, item ->
+                if (index != 0) {
+                    HorizontalDivider()
+                }
                 ListItem(
-                    headlineContent = { Text(it.title) },
-                    supportingContent = { Text(it.subtitle) },
+                    headlineContent = { Text(item.title) },
+                    supportingContent = { Text(item.subtitle) },
                     leadingContent = {
                         AsyncImage(
                             model = ImageRequest.Builder(LocalContext.current)
-                                .data(it.thumb)
+                                .data(item.thumb)
                                 .crossfade(true)
                                 .build(),
                             contentDescription = null,
