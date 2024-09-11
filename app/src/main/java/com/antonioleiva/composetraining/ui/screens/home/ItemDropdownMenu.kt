@@ -5,10 +5,6 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 
-enum class Action {
-    CLONE, DELETE
-}
-
 @Composable
 fun ItemDropdownMenu(
     expanded: Boolean,
