@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -62,21 +61,23 @@ private fun LoginForm(
     var user by rememberSaveable { mutableStateOf("") }
     var pass by rememberSaveable { mutableStateOf("") }
     val isLoginEnabled = user.isNotBlank() && pass.isNotBlank()
+    val isError = message != null
 
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
-        OutlinedTextField(
-            value = user,
-            onValueChange = { user = it },
-            label = { Text("Usuario") }
+        UserTextField(
+            user = user,
+            setUser = { user = it },
+            isError = isError
         )
-        OutlinedTextField(
-            value = pass,
-            onValueChange = { pass = it },
-            label = { Text("Contraseña") }
+        PassTextField(
+            pass = pass,
+            setPass = { pass = it },
+            isError = isError,
+            onDone = { if (isLoginEnabled) onSubmit(user, pass) }
         )
         Button(
             onClick = { onSubmit(user, pass) },
