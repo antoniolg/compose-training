@@ -22,7 +22,7 @@ import coil.request.ImageRequest
 import com.antonioleiva.composetraining.data.Item
 
 @Composable
-fun CustomListItem(item: Item, onAction: (Action) -> Unit) {
+fun HomeListItem(item: Item, onAction: (Action) -> Unit) {
     var showMenu by remember { mutableStateOf(false) }
 
     ListItem(
