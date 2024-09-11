@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -27,28 +28,31 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.antonioleiva.composetraining.ui.theme.ComposeTrainingTheme
 
 @Composable
-fun Login(modifier: Modifier = Modifier, viewModel: LoginViewModel = viewModel()) {
+fun Login(viewModel: LoginViewModel = viewModel()) {
 
     val state = viewModel.state
-
-    Box(
-        modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        val message = when {
-            state.loggedIn -> "Success"
-            state.error != null -> stringResource(id = state.error)
-            else -> null
-        }
-
-        LoginForm(
+    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+        Box(
             modifier = Modifier
-                .wrapContentSize()
-                .background(Color.Gray.copy(alpha = 0.2f))
-                .padding(16.dp),
-            message = message,
-            onSubmit = viewModel::loginClicked
-        )
+                .padding(innerPadding)
+                .fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            val message = when {
+                state.loggedIn -> "Success"
+                state.error != null -> stringResource(id = state.error)
+                else -> null
+            }
+
+            LoginForm(
+                modifier = Modifier
+                    .wrapContentSize()
+                    .background(Color.Gray.copy(alpha = 0.2f))
+                    .padding(16.dp),
+                message = message,
+                onSubmit = viewModel::loginClicked
+            )
+        }
     }
 }
 
