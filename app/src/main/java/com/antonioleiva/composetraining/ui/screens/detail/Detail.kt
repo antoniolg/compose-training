@@ -21,6 +21,10 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.antonioleiva.composetraining.data.Item
 import com.antonioleiva.composetraining.ui.theme.ComposeTrainingTheme
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class Detail(val id: Int)
 
 @Composable
 fun Detail(viewModel: DetailViewModel, onBackPressed: () -> Unit) {

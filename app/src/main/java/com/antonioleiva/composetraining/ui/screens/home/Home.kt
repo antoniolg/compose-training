@@ -25,6 +25,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.antonioleiva.composetraining.R
 import com.antonioleiva.composetraining.data.Item
 import com.antonioleiva.composetraining.data.itemList
+import kotlinx.serialization.Serializable
+
+@Serializable
+object Home
 
 @Composable
 fun Home(viewModel: HomeViewModel = viewModel(), onItemClick: (Item) -> Unit) {
