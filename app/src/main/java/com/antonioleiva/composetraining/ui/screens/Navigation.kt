@@ -2,6 +2,7 @@ package com.antonioleiva.composetraining.ui.screens
 
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -12,8 +13,7 @@ import com.antonioleiva.composetraining.ui.screens.home.Home
 import com.antonioleiva.composetraining.ui.screens.login.Login
 
 @Composable
-fun Navigation() {
-    val navController = rememberNavController()
+fun Navigation(navController: NavHostController = rememberNavController()) {
 
     NavHost(
         navController = navController,
