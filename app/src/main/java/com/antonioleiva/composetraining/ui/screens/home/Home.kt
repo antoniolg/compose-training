@@ -17,6 +17,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -25,6 +26,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.antonioleiva.composetraining.R
 import com.antonioleiva.composetraining.data.Item
 import com.antonioleiva.composetraining.data.itemList
+import kotlinx.coroutines.launch
 
 @Composable
 fun Home(viewModel: HomeViewModel = viewModel()) {
@@ -40,9 +42,13 @@ fun Home(viewModel: HomeViewModel = viewModel()) {
 fun Home(state: HomeViewModel.UiState, onAction: (Action, Int) -> Unit, onMessageRemoved: () -> Unit) {
     var gridMode by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
 
     val onItemClick: (Item) -> Unit = { item ->
-        //TODO
+        scope.launch {
+            snackbarHostState.currentSnackbarData?.dismiss()
+            snackbarHostState.showSnackbar("${item.title} clicked")
+        }
     }
 
     LaunchedEffect(state.message) {
