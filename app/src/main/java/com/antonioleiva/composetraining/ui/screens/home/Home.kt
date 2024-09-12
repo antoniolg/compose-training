@@ -1,9 +1,11 @@
 package com.antonioleiva.composetraining.ui.screens.home
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ViewList
 import androidx.compose.material.icons.filled.GridView
+import androidx.compose.material.icons.filled.ViewList
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -64,30 +66,41 @@ fun Home(
                 title = { Text(text = stringResource(R.string.app_name)) },
                 actions = {
                     IconButton(onClick = { gridMode = !gridMode }) {
-                        Icon(
-                            imageVector = if (gridMode) Icons.AutoMirrored.Default.ViewList else Icons.Default.GridView,
-                            contentDescription = stringResource(R.string.change_view)
-                        )
+                        Crossfade(targetState = gridMode, label = "iconCrossfade") { state ->
+                            if (state) {
+                                Icon(
+                                    imageVector = Icons.AutoMirrored.Default.ViewList,
+                                    contentDescription = stringResource(R.string.change_view)
+                                )
+                            } else {
+                                Icon(
+                                    imageVector = Icons.Default.GridView,
+                                    contentDescription = stringResource(R.string.change_view)
+                                )
+                            }
+                        }
                     }
                 }
             )
         },
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { innerPadding ->
-        if (gridMode) {
-            HomeGrid(
-                items = state.items,
-                onAction = onAction,
-                onItemClick = onItemClick,
-                modifier = Modifier.padding(innerPadding)
-            )
-        } else {
-            HomeList(
-                items = state.items,
-                onAction = onAction,
-                onItemClick = onItemClick,
-                modifier = Modifier.padding(innerPadding)
-            )
+        Crossfade(targetState = gridMode, label = "panelCrossfade") { gridMode ->
+            if (gridMode) {
+                HomeGrid(
+                    items = state.items,
+                    onItemClick = onItemClick,
+                    onAction = onAction,
+                    modifier = Modifier.padding(innerPadding)
+                )
+            } else {
+                HomeList(
+                    items = state.items,
+                    onItemClick = onItemClick,
+                    onAction = onAction,
+                    modifier = Modifier.padding(innerPadding)
+                )
+            }
         }
     }
 }
