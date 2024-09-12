@@ -12,4 +12,5 @@
     <string name="clone">Clone</string>
     <string name="delete">Delete</string>
     <string name="change_view">Change view</string>
+    <string name="login">Login</string>
 </resources>

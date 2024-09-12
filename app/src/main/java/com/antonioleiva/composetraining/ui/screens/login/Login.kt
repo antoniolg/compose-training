@@ -61,7 +61,7 @@ fun Login(viewModel: LoginViewModel = viewModel(), onLoggedIn: () -> Unit) {
 }
 
 @Composable
-private fun LoginForm(
+fun LoginForm(
     modifier: Modifier = Modifier,
     message: String? = null,
     onSubmit: (user: String, pass: String) -> Unit
