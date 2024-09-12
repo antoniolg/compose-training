@@ -2,15 +2,7 @@ package com.antonioleiva.composetraining.ui.screens.login
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateColor
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateDp
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.keyframes
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,7 +20,6 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -57,28 +48,10 @@ fun Login(viewModel: LoginViewModel = viewModel(), onLoggedIn: () -> Unit) {
                 }
             }
 
-            val transition = updateTransition(
-                targetState = state.error != null,
-                label = "bgTransition"
-            )
-
-            val infiniteTransition = rememberInfiniteTransition(label = "bgColorTransition")
-            val bgColor by infiniteTransition.animateColor(
-                initialValue = MaterialTheme.colorScheme.surface,
-                targetValue = MaterialTheme.colorScheme.surfaceVariant,
-                animationSpec = infiniteRepeatable(
-                    animation = keyframes {
-                        durationMillis = 1000
-                    },
-                    repeatMode = RepeatMode.Reverse
-                ),
-                label = "bgColor"
-            )
-
             LoginForm(
                 modifier = Modifier
                     .wrapContentSize()
-                    .background(bgColor)
+                    .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
                     .padding(16.dp),
                 message = state.error?.let { stringResource(it) },
                 onSubmit = viewModel::loginClicked
