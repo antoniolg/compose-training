@@ -2,12 +2,15 @@ package com.antonioleiva.composetraining
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.test.assertContentDescriptionEquals
+import androidx.compose.ui.test.assertTextContains
 import androidx.compose.ui.test.junit4.createComposeRule
-import androidx.compose.ui.test.onNodeWithContentDescription
-import androidx.compose.ui.test.onNodeWithText
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performTextInput
 import androidx.test.platform.app.InstrumentationRegistry
+import com.antonioleiva.composetraining.ui.screens.login.PASS_REVEAL_ICON_TEST_TAG
+import com.antonioleiva.composetraining.ui.screens.login.PASS_TEXT_FIELD_TEST_TAG
 import com.antonioleiva.composetraining.ui.screens.login.PassTextField
 import org.junit.Before
 import org.junit.Rule
@@ -31,13 +34,14 @@ class PassTextFieldTest {
     @Test
     fun revealIconShowsPassword(): Unit = with(composeTestRule) {
 
-        onNodeWithText("").performTextInput("pass")
-        onNodeWithText("••••").assertExists()
+        onNodeWithTag(PASS_TEXT_FIELD_TEST_TAG).performTextInput("pass")
+        onNodeWithTag(PASS_TEXT_FIELD_TEST_TAG).assertTextContains("••••")
 
-        onNodeWithContentDescription(ctx.getString(R.string.reveal_password)).performClick()
+        onNodeWithTag(PASS_REVEAL_ICON_TEST_TAG).performClick()
 
-        onNodeWithText("pass").assertExists()
-        onNodeWithContentDescription(ctx.getString(R.string.hide_password)).assertExists()
+        onNodeWithTag(PASS_TEXT_FIELD_TEST_TAG).assertTextContains("pass")
+        onNodeWithTag(PASS_REVEAL_ICON_TEST_TAG)
+            .assertContentDescriptionEquals(ctx.getString(R.string.hide_password))
 
     }
 }
