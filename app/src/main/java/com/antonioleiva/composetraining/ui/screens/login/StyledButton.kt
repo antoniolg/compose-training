@@ -1,5 +1,6 @@
 package com.antonioleiva.composetraining.ui.screens.login
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
@@ -29,15 +30,15 @@ fun StyledButton(
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
 
-    val backgroundColor =
-        if (isPressed) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.tertiary
+    val containerColor by animateColorAsState(
+        targetValue = if (isPressed) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.tertiary,
+        label = "containerColor"
+    )
 
     Button(
         onClick = onClick,
         modifier = modifier,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = backgroundColor
-        ),
+        colors = ButtonDefaults.buttonColors(containerColor = containerColor),
         enabled = enabled,
         shape = shape,
         elevation = elevation,
