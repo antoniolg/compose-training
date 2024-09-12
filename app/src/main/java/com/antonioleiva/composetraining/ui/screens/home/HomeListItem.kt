@@ -1,5 +1,6 @@
 package com.antonioleiva.composetraining.ui.screens.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -24,7 +25,11 @@ import com.antonioleiva.composetraining.R
 import com.antonioleiva.composetraining.data.Item
 
 @Composable
-fun HomeListItem(item: Item, onAction: (Action) -> Unit) {
+fun HomeListItem(
+    item: Item,
+    onAction: (Action) -> Unit,
+    onClick: () -> Unit
+) {
     var showMenu by remember { mutableStateOf(false) }
 
     ListItem(
@@ -54,6 +59,7 @@ fun HomeListItem(item: Item, onAction: (Action) -> Unit) {
                 onDismissRequest = { showMenu = false },
                 onAction = onAction
             )
-        }
+        },
+        modifier = Modifier.clickable { onClick() }
     )
 }

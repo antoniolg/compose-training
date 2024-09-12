@@ -1,6 +1,7 @@
 package com.antonioleiva.composetraining.ui.screens.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
@@ -27,10 +28,16 @@ import com.antonioleiva.composetraining.R
 import com.antonioleiva.composetraining.data.Item
 
 @Composable
-fun HomeGridItem(item: Item, onAction: (Action) -> Unit) {
+fun HomeGridItem(
+    item: Item,
+    onAction: (Action) -> Unit,
+    onClick: () -> Unit
+) {
     var showMenu by remember { mutableStateOf(false) }
     Column(
-        modifier = Modifier.padding(2.dp)
+        modifier = Modifier
+            .padding(2.dp)
+            .clickable { onClick() }
     ) {
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
