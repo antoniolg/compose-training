@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ViewList
 import androidx.compose.material.icons.filled.GridView
-import androidx.compose.material.icons.filled.ViewList
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -21,7 +20,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.antonioleiva.composetraining.R
-import com.antonioleiva.composetraining.data.Item
 import com.antonioleiva.composetraining.data.itemList
 
 @Composable
@@ -31,7 +29,7 @@ fun Home(viewModel: HomeViewModel = viewModel()) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Home(items: List<Item>, onAction: (Action, Int) -> Unit) {
+fun Home(state: HomeViewModel.UiState, onAction: (Action, Int) -> Unit) {
     var gridMode by remember { mutableStateOf(false) }
     Scaffold(
         topBar = {
@@ -50,13 +48,13 @@ fun Home(items: List<Item>, onAction: (Action, Int) -> Unit) {
     ) { innerPadding ->
         if (gridMode) {
             HomeGrid(
-                items = items,
+                items = state.items,
                 onAction = onAction,
                 modifier = Modifier.padding(innerPadding)
             )
         } else {
             HomeList(
-                items = items,
+                items = state.items,
                 onAction = onAction,
                 modifier = Modifier.padding(innerPadding)
             )
@@ -68,7 +66,7 @@ fun Home(items: List<Item>, onAction: (Action, Int) -> Unit) {
 @Composable
 fun HomePreview() {
     Home(
-        items = itemList,
+        state = HomeViewModel.UiState(itemList),
         onAction = { _, _ -> }
     )
 }
