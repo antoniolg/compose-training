@@ -13,6 +13,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,16 +27,25 @@ import com.antonioleiva.composetraining.data.itemList
 
 @Composable
 fun Home(viewModel: HomeViewModel = viewModel()) {
-    Home(viewModel.state, viewModel::onAction)
+    Home(
+        state = viewModel.state,
+        onAction = viewModel::onAction,
+        onMessageRemoved = viewModel::onMessageRemoved
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun Home(state: HomeViewModel.UiState, onAction: (Action, Int) -> Unit) {
+fun Home(state: HomeViewModel.UiState, onAction: (Action, Int) -> Unit, onMessageRemoved: () -> Unit) {
     var gridMode by remember { mutableStateOf(false) }
     val snackbarHostState = remember { SnackbarHostState() }
 
-    snackbarHostState.showSnackbar("I'm here!")
+    LaunchedEffect(state.message) {
+        state.message?.let {
+            snackbarHostState.showSnackbar(it)
+            onMessageRemoved()
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -74,6 +84,7 @@ fun Home(state: HomeViewModel.UiState, onAction: (Action, Int) -> Unit) {
 fun HomePreview() {
     Home(
         state = HomeViewModel.UiState(itemList),
-        onAction = { _, _ -> }
+        onAction = { _, _ -> },
+        onMessageRemoved = {}
     )
 }
