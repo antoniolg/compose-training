@@ -13,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -28,7 +29,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.antonioleiva.composetraining.ui.theme.ComposeTrainingTheme
 
 @Composable
-fun Login(viewModel: LoginViewModel = viewModel()) {
+fun Login(viewModel: LoginViewModel = viewModel(), onLoggedIn: () -> Unit) {
 
     val state = viewModel.state
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -38,10 +39,10 @@ fun Login(viewModel: LoginViewModel = viewModel()) {
                 .fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            val message = when {
-                state.loggedIn -> "Success"
-                state.error != null -> stringResource(id = state.error)
-                else -> null
+            LaunchedEffect(state.loggedIn) {
+                if (state.loggedIn) {
+                    onLoggedIn()
+                }
             }
 
             LoginForm(
@@ -49,7 +50,7 @@ fun Login(viewModel: LoginViewModel = viewModel()) {
                     .wrapContentSize()
                     .background(Color.Gray.copy(alpha = 0.2f))
                     .padding(16.dp),
-                message = message,
+                message = state.error?.let { stringResource(it) },
                 onSubmit = viewModel::loginClicked
             )
         }

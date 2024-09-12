@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.antonioleiva.composetraining.ui.screens.home.Home
+import com.antonioleiva.composetraining.ui.screens.Navigation
 import com.antonioleiva.composetraining.ui.theme.ComposeTrainingTheme
 
 class MainActivity : ComponentActivity() {
@@ -13,7 +13,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ComposeTrainingTheme {
-                Home()
+                Navigation()
             }
         }
     }
