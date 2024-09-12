@@ -4,8 +4,12 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import com.antonioleiva.composetraining.R
+
+const val ITEM_DROPDOWN_TEST_TAG = "ItemDropdownTestTag"
 
 @Composable
 fun ItemDropdownMenu(
@@ -15,7 +19,8 @@ fun ItemDropdownMenu(
 ) {
     DropdownMenu(
         expanded = expanded,
-        onDismissRequest = onDismissRequest
+        onDismissRequest = onDismissRequest,
+        modifier = Modifier.testTag(ITEM_DROPDOWN_TEST_TAG)
     ) {
         DropdownMenuItem(
             text = { Text(text = stringResource(R.string.clone)) },
