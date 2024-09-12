@@ -8,6 +8,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -31,6 +33,10 @@ fun Home(viewModel: HomeViewModel = viewModel()) {
 @Composable
 fun Home(state: HomeViewModel.UiState, onAction: (Action, Int) -> Unit) {
     var gridMode by remember { mutableStateOf(false) }
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    snackbarHostState.showSnackbar("I'm here!")
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -44,7 +50,8 @@ fun Home(state: HomeViewModel.UiState, onAction: (Action, Int) -> Unit) {
                     }
                 }
             )
-        }
+        },
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { innerPadding ->
         if (gridMode) {
             HomeGrid(
