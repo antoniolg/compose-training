@@ -1,6 +1,7 @@
 package com.antonioleiva.composetraining.ui.screens.login
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -87,14 +88,17 @@ private fun LoginForm(
             isError = isError,
             onDone = { if (isLoginEnabled) onSubmit(user, pass) }
         )
-        StyledButton(
-            onClick = { onSubmit(user, pass) },
-            enabled = isLoginEnabled
-        ) {
-            Text("Login")
+        AnimatedVisibility(isLoginEnabled) {
+            StyledButton(
+                onClick = { onSubmit(user, pass) },
+                enabled = isLoginEnabled
+            ) {
+                Text("Login")
+            }
         }
 
-        if (message != null) {
+        AnimatedVisibility(message != null) {
+            requireNotNull(message)
             Text(
                 text = message,
                 color = MaterialTheme.colorScheme.error,
