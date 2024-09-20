@@ -64,6 +64,8 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.fragment)
     implementation(libs.androidx.fragment.compose)
+    implementation(libs.exoplayerCore)
+    implementation(libs.exoplayerUi)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

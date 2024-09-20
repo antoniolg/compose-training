@@ -12,6 +12,7 @@ composeBom = "2024.09.01"
 coil = "2.7.0"
 navigationCompose = "2.8.0"
 fragmentx = "1.8.3"
+exoplayer = "1.4.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -35,6 +36,8 @@ androidx-navigation-compose = { group = "androidx.navigation", name = "navigatio
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 androidx-fragment = { group = "androidx.fragment", name = "fragment", version.ref = "fragmentx" }
 androidx-fragment-compose = { group = "androidx.fragment", name = "fragment-compose", version.ref = "fragmentx" }
+exoplayerCore = { group = "androidx.media3", name = "media3-exoplayer", version.ref = "exoplayer" }
+exoplayerUi = { group = "androidx.media3", name = "media3-ui", version.ref = "exoplayer" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

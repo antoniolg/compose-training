@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.antonioleiva.composetraining.ui.MyFragment
 import com.antonioleiva.composetraining.ui.screens.Navigation
+import com.antonioleiva.composetraining.ui.screens.videoPlayer.VideoPlayer
 
 class MainActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,7 +16,7 @@ class MainActivity : FragmentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            Navigation()
+            VideoPlayer()
         }
     }
 }
