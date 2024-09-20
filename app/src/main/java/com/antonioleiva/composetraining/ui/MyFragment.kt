@@ -4,21 +4,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import androidx.fragment.compose.content
+import com.antonioleiva.composetraining.R
 import com.antonioleiva.composetraining.ui.screens.login.LoginForm
 import com.antonioleiva.composetraining.ui.theme.ComposeTrainingTheme
 
 
-class MyFragment : Fragment() {
+class MyFragment : Fragment(R.layout.fragment_my) {
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View = content {
-        ComposeTrainingTheme {
-            LoginForm(onSubmit = { _, _ -> })
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val composeView = view.findViewById<ComposeView>(R.id.composeView)
+        composeView.setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
+        composeView.setContent {
+            ComposeTrainingTheme {
+                LoginForm(onSubmit = { _, _ -> })
+            }
         }
     }
 }
