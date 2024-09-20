@@ -11,6 +11,7 @@ activityCompose = "1.9.2"
 composeBom = "2024.09.01"
 coil = "2.7.0"
 navigationCompose = "2.8.0"
+fragmentx = "1.8.3"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -32,6 +33,8 @@ androidx-material-icons-extended = { group = "androidx.compose.material", name =
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+androidx-fragment = { group = "androidx.fragment", name = "fragment", version.ref = "fragmentx" }
+androidx-fragment-compose = { group = "androidx.fragment", name = "fragment-compose", version.ref = "fragmentx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

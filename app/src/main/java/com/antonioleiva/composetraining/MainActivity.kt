@@ -1,20 +1,17 @@
 package com.antonioleiva.composetraining
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import com.antonioleiva.composetraining.ui.screens.Navigation
-import com.antonioleiva.composetraining.ui.theme.ComposeTrainingTheme
+import androidx.fragment.app.FragmentActivity
+import com.antonioleiva.composetraining.ui.MyFragment
 
-class MainActivity : ComponentActivity() {
+class MainActivity : FragmentActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContent {
-            ComposeTrainingTheme {
-                Navigation()
-            }
-        }
+
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container_view, MyFragment())
+            .commit()
     }
 }
