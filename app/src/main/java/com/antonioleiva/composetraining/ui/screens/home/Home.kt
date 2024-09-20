@@ -1,6 +1,7 @@
 package com.antonioleiva.composetraining.ui.screens.home
 
 import androidx.compose.animation.Crossfade
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ViewList
@@ -24,10 +25,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.fragment.compose.AndroidFragment
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.antonioleiva.composetraining.R
 import com.antonioleiva.composetraining.data.Item
 import com.antonioleiva.composetraining.data.itemList
+import com.antonioleiva.composetraining.ui.MyFragment
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -88,21 +91,27 @@ fun Home(
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) }
     ) { innerPadding ->
         Crossfade(targetState = gridMode, label = "panelCrossfade") { gridMode ->
-            if (gridMode) {
-                HomeGrid(
-                    items = state.items,
-                    onItemClick = onItemClick,
-                    onAction = onAction,
-                    modifier = Modifier.padding(innerPadding)
-                )
-            } else {
-                HomeList(
-                    items = state.items,
-                    onItemClick = onItemClick,
-                    onAction = onAction,
-                    modifier = Modifier.padding(innerPadding)
-                )
+
+            Column(
+                modifier = Modifier.padding(innerPadding)
+            ) {
+                AndroidFragment<MyFragment>()
+
+                if (gridMode) {
+                    HomeGrid(
+                        items = state.items,
+                        onItemClick = onItemClick,
+                        onAction = onAction,
+                    )
+                } else {
+                    HomeList(
+                        items = state.items,
+                        onItemClick = onItemClick,
+                        onAction = onAction
+                    )
+                }
             }
+
         }
     }
 }

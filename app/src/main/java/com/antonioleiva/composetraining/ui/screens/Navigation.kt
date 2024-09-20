@@ -17,7 +17,7 @@ fun Navigation(navController: NavHostController = rememberNavController()) {
 
     NavHost(
         navController = navController,
-        startDestination = Login
+        startDestination = Home
     ) {
         composable<Login> { backStackEntry ->
             Login(onLoggedIn = {

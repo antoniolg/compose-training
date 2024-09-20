@@ -7,6 +7,7 @@ import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
 import com.antonioleiva.composetraining.R
 import com.antonioleiva.composetraining.ui.screens.login.Login
+import com.antonioleiva.composetraining.ui.screens.login.LoginForm
 import com.antonioleiva.composetraining.ui.theme.ComposeTrainingTheme
 
 
@@ -19,7 +20,7 @@ class MyFragment : Fragment(R.layout.fragment_my) {
         composeView.setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
         composeView.setContent {
             ComposeTrainingTheme {
-                Login(onLoggedIn = {})
+                LoginForm(onSubmit = { _, _ -> })
             }
         }
     }
